@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dj.ssm.mapper.UserMapper">
+    <sql id="USER">
+        id,user_name,user_pwd,is_del
+    </sql>
+
+    <update id="update">
+        update user
+            <set>
+                <if test="null != userName and userName != ''">
+                    user_name = #{userName},
+                </if>
+                <if test="null != userPwd and userPwd != ''">
+                    user_pwd = #{userPwd},
+                </if>
+                <if test="null != isDel">
+                    is_del = #{isDel}
+                </if>
+            </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="findUserByNameAndPwd" resultType="User">
+        select <include refid="USER"/>
+            from user
+        where
+            user_name = #{userName} and user_pwd = #{userPwd}
+    </select>
+
+    <select id="findUserByName" resultType="User">
+        select <include refid="USER"/>
+            from user
+        where
+            user_name = #{userName}
+    </select>
+
+    <select id="findUserById" resultType="com.dj.ssm.pojo.User">
+        select <include refid="USER"/>
+            from user
+        where
+            id = #{id}
+    </select>
+    <select id="findUserAll" resultType="com.dj.ssm.pojo.User">
+        select <include refid="USER"/>
+            from user
+        where
+            is_del = 1
+    </select>
+
+    <insert id="addUser">
+        insert into
+            user
+        (user_name,user_pwd,is_del)
+            values
+        (#{userName},#{userPwd},#{isDel})
+    </insert>
+
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dj.ssm.mapper.ProMapper">
+    <sql id="PRO">
+        id,pro_name,user_id,is_del
+    </sql>
+
+    <sql id="PRO_A">
+        a.id,a.pro_name,a.user_id,a.is_del
+    </sql>
+
+    <update id="update">
+        update product
+            <set>
+                <if test="null != proName and proName != ''">
+                    pro_name = #{proName},
+                </if>
+                <if test="null != userId">
+                    user_id = #{userId},
+                </if>
+                <if test="null != isDel">
+                    is_del = #{isDel}
+                </if>
+            </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="findProAll" resultType="Product">
+        select <include refid="PRO_A"/>, b.user_name
+            from
+        product a
+            inner join user b on a.user_id = b.id
+        where a.is_del = 1 order by a.id desc
+    </select>
+
+    <select id="findProByName" resultType="Product">
+        select <include refid="PRO"/>
+            from
+        product
+            where
+        pro_name = #{proName}
+    </select>
+
+    <select id="findProById" resultType="com.dj.ssm.pojo.Product">
+        select <include refid="PRO"/>
+            from
+        product
+            where
+        id = #{id}
+    </select>
+
+    <insert id="addPro">
+        insert into
+            product
+        (pro_name,user_id,is_del)
+            values
+        (#{proName},#{userId},#{isDel})
+    </insert>
+</mapper>
