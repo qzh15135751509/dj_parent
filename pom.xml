@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.3.12.RELEASE</spring.version>
         <jackson.version>2.9.1</jackson.version>
-        <log4j2.version>2.9.0</log4j2.version>
+        <log4j2.version>2.16.0</log4j2.version>
         <mysql.version>5.1.38</mysql.version>
     </properties>
 
